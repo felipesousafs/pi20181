@@ -7,7 +7,7 @@ occurrences = []
 def search(keyword, url, depth):
     depth -= 1
     response = requests.get(url)
-    page = BeautifulSoup(response.content)
+    page = BeautifulSoup(response.content, 'html5lib')
     links = page.find_all('a')
     for link in links:
         print('URL: ', link.get('href'))
@@ -17,7 +17,7 @@ def search(keyword, url, depth):
             print('Find HTTP:', link.get('href').find('http'))
             if depth > 0 and link.get('href').find('http') > -1:
                 search(keyword, link.get('href'), depth)
-    check_occurrence(response.text, keyword)
+    check_occurrence(page.get_text(), keyword)
 
 def check_occurrence(content, kw):
     number_of_ocurrences = content.lower().count(kw)
@@ -26,13 +26,14 @@ def check_occurrence(content, kw):
     print('kw: ', kw)
     print('number of occurrences: ', number_of_ocurrences)
     for index in indexes:
-        print_each_occurrence(index, content.lower())
-    # file = open('result.txt', 'w')
-    # file.write(content.lower())
-    # file.close()
+        occurrences.append(content[index-30:index+30])
 
-def print_each_occurrence(index, content):
-    print(index)
-    print(content[index-20:index+40])
+def print_each_occurrence(occurrences):
+    for occurrence in occurrences:
+        print(occurrence)
+
+
 url = 'https://globoesporte.globo.com/'
-search('flamengo', url, 1)
+search('flamengo', url, 2)
+print('============ Ocorrências ============')
+print_each_occurrence(occurrences)
