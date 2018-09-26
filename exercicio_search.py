@@ -33,6 +33,6 @@ def check_occurrence(content, kw):
 
 def print_each_occurrence(index, content):
     print(index)
-    print(content[100:200])
+    print(content[index-20:index+40])
 url = 'https://globoesporte.globo.com/'
 search('flamengo', url, 1)
