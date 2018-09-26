@@ -1,4 +1,5 @@
 import requests
+import re
 from bs4 import BeautifulSoup
 
 occurrences = []
@@ -12,17 +13,26 @@ def search(keyword, url, depth):
         print('URL: ', link.get('href'))
         print('Depth: ', depth)
         print('Element <a>: ', link)
-        if depth > 0 and link.get('href') != None:
+        if link.get('href') != None:
             print('Find HTTP:', link.get('href').find('http'))
-            if link.get('href').find('http') > -1:
-                check_occurrence(response.text, keyword)
+            if depth > 0 and link.get('href').find('http') > -1:
                 search(keyword, link.get('href'), depth)
+    check_occurrence(response.text, keyword)
 
 def check_occurrence(content, kw):
-    number_of_ocurrences = content.count(kw)
-    indexes = [i for i, x in enumerate(content) if x == kw]
-    print('indexes: ', indexes)
+    number_of_ocurrences = content.lower().count(kw)
+    indexes = [m.start() for m in re.finditer(kw.lower(), content.lower())]
+    print('Indexes: ', indexes)
+    print('kw: ', kw)
     print('number of occurrences: ', number_of_ocurrences)
-    print('=========== CONTENT ============== :', content)
+    for index in indexes:
+        print_each_occurrence(index, content.lower())
+    # file = open('result.txt', 'w')
+    # file.write(content.lower())
+    # file.close()
+
+def print_each_occurrence(index, content):
+    print(index)
+    print(content[100:200])
 url = 'https://globoesporte.globo.com/'
-search('flamengo', url, 2)
+search('flamengo', url, 1)
