@@ -2,6 +2,7 @@ import requests
 import re
 import requests_cache
 import time
+import asyncio
 from bs4 import BeautifulSoup
 
 start_time = time.time()
@@ -19,7 +20,7 @@ def search(keyword, url, depth):
     links = page.find_all('a')
     for link in links:
         if link.get('href') != None:
-            print('Find HTTP:', link.get('href').find('http'))
+            # print('Find HTTP:', link.get('href').find('http'))
             if depth > 0 and link.get('href').find('http') > -1:
                 search(keyword, link.get('href'), depth)
     check_occurrence(response.text, keyword)
@@ -34,13 +35,20 @@ def print_each_occurrence(occurrences):
         print(occurrence)
 
 
+# URLs e Keywords
 url_ge = 'https://globoesporte.globo.com/'
 keyword_ge = 'flamengo'
 url_americanas = 'https://www.americanas.com.br/'
 keyword_americanas = 'geladeira'
 url_rege = 'http://regeneracao.pi.gov.br/'
 keyword_rege = 'prefeitura'
-search(keyword_americanas, url_americanas, 1)
+
+depth = 1 # Em quantas camadas deve ser realizada a busca
+
+# Chamada da função de busca
+search(keyword_americanas, url_americanas, depth)
+
+# Resultados
 print('============ Ocorrências ============')
 print_each_occurrence(occurrences)
 print('------------------------------------')
