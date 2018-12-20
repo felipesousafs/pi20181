@@ -1,13 +1,11 @@
-## Felipe de Sousa Silva
-##### Contato:
-- felipe.sousa.fs@gmail.com
-##### Habilidades:
-- Ruby on Rails
-- CSS/JS/HTML
-##### Interesses:
-- Desenvolvimento Web e Mobile
-- Novas tecnologias
-##### Portfólio:
-- Projetos inacabados (alguns podem ser encontrados nessa conta do GitHub)
-##### Expectativa quanto a disciplina:
-- Que seja uma disciplina atraente, interessante e prazerosa
+## APIs
+##### Pokemon:
+- https://pokeapi.co/docs/v2.html
+##### Spotify:
+- https://developer.spotify.com/documentation/web-api/reference/
+##### Reddit:
+- https://www.reddit.com/dev/api
+
+
+
+Mais APIs em https://99apis.com/
